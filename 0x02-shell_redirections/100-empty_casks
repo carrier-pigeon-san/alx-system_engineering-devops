@@ -1,2 +1,2 @@
 #!/bin/bash
-find -maxdepth 0 -empty d | ls -a\n
+find . -empty -printf "%f\n"
