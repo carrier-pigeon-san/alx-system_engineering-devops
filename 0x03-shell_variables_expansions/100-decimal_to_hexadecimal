@@ -1,2 +1,2 @@
 #!bin/bash
-printf "%X" $DECIMAL
+echo "obase=16; $DECIMAL" | bc
