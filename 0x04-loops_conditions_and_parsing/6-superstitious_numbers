@@ -11,7 +11,7 @@ do
 	case "$n" in
 		4)
 			echo $n
-			echo "bad luck From China"
+			echo "bad luck from China"
 			;;
 		8)
 			echo $n
