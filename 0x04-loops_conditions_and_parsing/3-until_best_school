@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# displays string "Best School" 10 times using 'until' loop
+
+i="0"
+
+until ((i == 9))
+do
+	echo "Best School"
+	i=$i+1
+done
+
