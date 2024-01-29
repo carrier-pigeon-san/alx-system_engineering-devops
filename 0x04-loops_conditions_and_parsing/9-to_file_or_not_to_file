@@ -6,7 +6,7 @@
 # prints 'school file is not empty' if file is not empty
 # prints 'school file is a regular file' if file is a regular file
 
-data='School'
+data='school'
 if [ -e "$data" ]
 then
 	echo "school file exists"
