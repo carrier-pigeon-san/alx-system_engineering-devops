@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# displays content of current directory in a list format
+# where only part of the name after the first dash is displayed
+
+dirs=$(ls)
+
+for dir in $dirs
+do
+	echo "$dir" | cut -d '-' -f2
+done
