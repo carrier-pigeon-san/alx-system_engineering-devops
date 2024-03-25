@@ -3,6 +3,6 @@
 # Puppet resource: exec
 # Command: sed
 
-exec { "sed -i 's/PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config":
+exec { "sudo sed -i 's/PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config":
   path => '/usr/bin:/usr/sbin:/bin',
 }
