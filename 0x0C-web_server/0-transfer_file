@@ -1,4 +1,12 @@
 #!/usr/bin/env bash
+# cript transfers file from client to server using scp command
+# Script accepts 4 parameters including:
+# * Path to file to be transfered
+# * IP address of the server to transfer the file to
+# * Username scp connects with
+# * Path to SSH private key that scp uses
+# File is transfered to home directory of the server
+# Strict host key checking is disabled while using scp
 
 if [ "$#" -lt 4 ]
 then
