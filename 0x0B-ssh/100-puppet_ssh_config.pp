@@ -4,5 +4,11 @@
 # Command: sed
 
 exec { "sudo sed -i 's/PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config":
-  path => '/usr/bin:/usr/sbin:/bin',
+  path  => '/usr/bin:/usr/sbin:/bin',
+  group => 'root',
+}
+
+exec { "systemctl reload sshd":
+  path  => '/usr/bin:/usr/sbin:/bin',
+  group => 'root',
 }
