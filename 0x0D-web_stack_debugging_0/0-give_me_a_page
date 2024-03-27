@@ -2,5 +2,4 @@
 # debugging curl exit code 52 on failure to retrieve page from port 8080 of
 # docker host mapped to p0rt 80 of container
 
-docker exec -i 47ca3994a491 echo "Hello Holberton" > /var/www/html/index.html
-ufw allow 8080
+apachectl restart
