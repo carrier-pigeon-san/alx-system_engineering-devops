@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+# Installing Nginx web server
+
+# Install Nginx
+sudo apt update
+sudo apt install nginx -y
+
+# Add firewall rule to allow HTTP traffic on port 80
+sudo ufw allow 'Nginx HTTP'
+
+# Create new document root directory from where static content is served
+sudo mkdir -p /var/www/example.com/html
+
+# Assign ownership of document root directory to normal user to
+# write them without using sudo
+sudo chown -R /var/www/example.com/html
+
+# Setting umask of web roots
+sudo chmod -R 0755 /var/www
+
+# Creating an index.html file in web root directory
+echo "Hello World!" > /var/www/example.com/html/index.html
+
+# Downloading server block file from github into nginx sites-available
+# directory
+sudo wget -P /etc/nginx/sites-available/ https://raw.githubusercontent.com/carrier-pigeon-san/alx-system_engineering-devops/master/0x0C-web_server/example.com
+
+# creating a symbolic link to the server block, in the sites-enabled directory
+sudo ln -s /etc/nginx/sites-available/example.com /etc/nginx/sites-enabled/
+
+# Remove symbolic link to default server nginx server block from the nginx
+# sites-enabled directory
+sudo rm /etc/nginx/sites-enabled/default
+
+# Enabling server_names_hash_bucket_size configuration in nginx.conf
+sudo sed -i 's/# server_names_hash_bucket_size 64;/server_names_hash_bucket_size 64;/g' /etc/nginx/nginx.conf
+
+# Reload nginx service
+sudo nginx -s reload
