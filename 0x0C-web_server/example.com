@@ -2,9 +2,9 @@ server {
 	listen 80 default_server;
 	listen [::]:80 default_server;
 
-	server_name example.com;
+	server_name web_01.com;
 
-	root /var/www/example.com/html;
+	root /var/www/web_01.com/html;
 	index index.html;
 
 	location / {
