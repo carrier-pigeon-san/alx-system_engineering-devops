@@ -5,24 +5,11 @@
 sudo apt update
 sudo apt install nginx -y
 
-# Add firewall rule to allow HTTP traffic on port 80
-sudo ufw allow 'Nginx HTTP'
-
-# Enable firewall if disabled
-sudo ufw enable
-
 # Create new document root directory from where static content is served
 sudo mkdir -p /var/www/web_01.com/html
 
-# Assign ownership of document root directory to normal user to
-# write them without using sudo
-sudo chown -R $USER:$USER /var/www/web_01.com/html
-
-# Setting umask of web roots
-sudo chmod -R 0755 /var/www
-
 # Creating an index.html file in web root directory
-echo "Hello World!" > /var/www/web_01.com/html/index.html
+sudo echo "Hello World!" > /var/www/web_01.com/html/index.html
 
 # Downloading server block file from github into nginx sites-available
 # directory
