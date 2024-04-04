@@ -16,7 +16,7 @@ server_block="server {
 }"
 
 sudo apt update
-sudo apt install nging -y
+sudo apt install nginx -y
 
 sudo mkdir -p /var/www/web_01.com/html
 
