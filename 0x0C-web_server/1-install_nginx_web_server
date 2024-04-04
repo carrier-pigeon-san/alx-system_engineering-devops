@@ -26,7 +26,7 @@ then
 fi
 
 # Creating an index.html file in the web root
-echo "Hello World!" > /var/www/web_01.com/html/index.html
+echo "Hello World!" | sudo tee /var/www/web_01.com/html/index.html >/dev/null
 
 # Write the nginx server block to a configuration file
 echo "$server_block" | sudo tee /etc/nginx/sites-available/web_01.com >/dev/null
