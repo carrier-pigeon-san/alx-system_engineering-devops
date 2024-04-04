@@ -1,29 +1,44 @@
 #!/usr/bin/env bash
-# Installing Nginx web server
+# Installing and configuring nginx web server
 
-# Install Nginx
+server_block="server {
+	listen 80 default_server;
+	listen [::]:80 default_server;
+
+	server_name web_01.com;
+
+	root /var/www/web_01.com/html;
+	index index.html;
+
+	location / {
+		try_files \$uri \$uri/ =404;
+	}
+}"
+
 sudo apt update
-sudo apt install nginx -y
+sudo apt install nging -y
 
-# Create new document root directory from where static content is served
 sudo mkdir -p /var/www/web_01.com/html
 
-# Creating an index.html file in web root directory
-sudo echo "Hello World!" > /var/www/web_01.com/html/index.html
+if [ "$USER" != 'root' ]
+then
+	sudo chown -R "$USER":"$USER" /var/www/web_01.com/html
+fi
 
-# Downloading server block file from github into nginx sites-available
-# directory
-sudo wget -P /etc/nginx/sites-available/ https://raw.githubusercontent.com/carrier-pigeon-san/alx-system_engineering-devops/master/0x0C-web_server/web_01.com
+# Creating an index.html file in the web root
+echo "Hello World!" > /var/www/web_01.com/html/index.html
 
-# creating a symbolic link to the server block, in the sites-enabled directory
+# Write the nginx server block to a configuration file
+echo "$server_block" | sudo tee /etc/nginx/sites-available/web_01.com >/dev/null
+
+# Create a symbolic link of the new server block in the /etc/nginx/sites-enabled directory
 sudo ln -s /etc/nginx/sites-available/web_01.com /etc/nginx/sites-enabled/
 
-# Remove symbolic link to default server nginx server block from the nginx
-# sites-enabled directory
+# Remove symbolic link to default server block from the /etc/nginx/sites-enabled directory
 sudo rm /etc/nginx/sites-enabled/default
 
-# Enabling server_names_hash_bucket_size configuration in nginx.conf
-sudo sed -i 's/# server_names_hash_bucket_size 64;/server_names_hash_bucket_size 64;/g' /etc/nginx/nginx.conf
+# Uncomment the server_names_hash_bucket_size directive within the nginx.conf file.
+sudo sed -i 's/# server_names_hash_bucket_size 64/server_names_hash_bucket_size/g' /etc/nginx/nginx.conf
 
-# Reload nginx service
+# Reload nginx
 sudo nginx -s reload
