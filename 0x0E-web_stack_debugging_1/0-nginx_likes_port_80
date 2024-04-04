@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 # Debugging failure of ubuntu nginx install from listening on port 80
-sed -i 's/server {/server {\n\tlisten 80 ;/g' /etc/nginx/nginx.conf
+sed -i 's/server {/server {\n\tlisten 80 default_server;/g' /etc/nginx/sites-available/default
 service nginx start
 nginx -s reload
