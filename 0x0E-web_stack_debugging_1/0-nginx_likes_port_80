@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 # Debugging failure of ubuntu nginx install from listening on port 80
+apt-get update && apt-get upgrade -y
+apt install nginx -y
 service nginx restart
