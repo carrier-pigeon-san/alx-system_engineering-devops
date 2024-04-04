@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 # Debugging failure of ubuntu nginx install from listening on port 80
-ufw allow 'Nginx HTTP'
-service nginx restart
+sed -i 's/server {/server {\n\tlisten 80 default_server;/g' /etc/nginx/nginx.conf
+nginx -s reload
