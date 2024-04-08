@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 # Debugging failure of ubuntu nginx install from listening on port 80
 systemctl start nginx
+nginx -s reload
