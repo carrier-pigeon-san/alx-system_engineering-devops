@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 # Debugging failure of ubuntu nginx install from listening on port 80
 ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
-nginx -s reload
+service nginx restart
