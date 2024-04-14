@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
 # Debugging failure of ubuntu nginx install from listening on port 80
-sudo sed -i 's/listen \[::\]:80 default_server/listen [::]:80 default_server ipv6only=off/g' /etc/nginx/sites-available/default
-sudo service nginx start
-sudo nginx -s reload
+ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
+service nginx restart
