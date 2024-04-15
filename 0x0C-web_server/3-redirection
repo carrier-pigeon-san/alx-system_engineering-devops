@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Installing and configuring nginx web server
+# Configuring nginx redirect directive 
+
+sudo apt update -y
+sudo apt install nginx -y
+sudo service nginx start
+
+# Creating an index.html file in the web root
+echo "Hello World!" | sudo tee /var/www/html/index.html >/dev/null
+
+# Create location directive to redirect 'redirect_me' to another page
+sudo sed -i 's/location \/ {/location \/redirect_me {\n\t\treturn 301 http:\/\/sandev.tech$request_uri;\n\t}\n\n\tlocation \/ {/g' /etc/nginx/sites-available/default
+
+# Create a symbolic link of the new server block in the /etc/nginx/sites-enabled directory
+sudo ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
+
+# Reload nginx
+sudo nginx -s reload
