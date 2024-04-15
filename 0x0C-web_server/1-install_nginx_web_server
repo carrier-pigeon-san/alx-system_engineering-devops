@@ -17,6 +17,7 @@ server_block="server {
 
 sudo apt update
 sudo apt install nginx -y
+service nginx start
 
 sudo mkdir -p /var/www/web_01.com/html
 
@@ -35,10 +36,10 @@ echo "$server_block" | sudo tee /etc/nginx/sites-available/web_01.com >/dev/null
 sudo ln -s /etc/nginx/sites-available/web_01.com /etc/nginx/sites-enabled/
 
 # Remove symbolic link to default server block from the /etc/nginx/sites-enabled directory
-sudo rm /etc/nginx/sites-enabled/default
+sudo rm -f /etc/nginx/sites-enabled/default
 
 # Uncomment the server_names_hash_bucket_size directive within the nginx.conf file.
-sudo sed -i 's/# server_names_hash_bucket_size 64/server_names_hash_bucket_size/g' /etc/nginx/nginx.conf
+sudo sed -i 's/# server_names_hash_bucket_size/server_names_hash_bucket_size/g' /etc/nginx/nginx.conf
 
 # Reload nginx
 sudo nginx -s reload
