@@ -2,7 +2,7 @@
 # Installing and configuring nginx web server
 
 server_block="server {
-	listen 80 default_server;
+	listen 80;
 	listen [::]:80 default_server;
 
 	server_name web_01.com;
