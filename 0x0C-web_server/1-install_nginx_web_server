@@ -17,7 +17,7 @@ server_block="server {
 
 sudo apt update
 sudo apt install nginx -y
-service nginx start
+sudo service nginx start
 
 sudo mkdir -p /var/www/web_01.com/html
 
