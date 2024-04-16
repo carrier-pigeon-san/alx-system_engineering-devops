@@ -4,13 +4,13 @@
 sudo sed -i 's/listen 80/listen 8080/g' /etc/nginx/sites_available/default
 sudo sed -i 's/listen [::]:80/listen [::]:8080/g' /etc/nginx/sites_available/default
 
-sudo sed -i 's/user www-data/# user www-data/g' /etc/nginx/nginx.conf
+sudo sed -i 's/user/# user/g' /etc/nginx/nginx.conf
 
 sudo sed -i 's/KillMode=mixed/KillMode=mixed\nUser=nginx\nGroup=nginx\nRestart=on-failure\nRestartSec=10s/g' /lib/systemd/system/nginx.service
 
 sudo systemctl daemon-reload
 
-sudo su nginx -c "chmod 766 /var/log/nginx/error.log"
-sudo su nginx -c "chmod 777 /run"
+sudo su nginx -c "sudo chmod 766 /var/log/nginx/error.log"
+sudo su nginx -c "sudo chmod 777 /run"
 
 sudo systemctl restart nginx
