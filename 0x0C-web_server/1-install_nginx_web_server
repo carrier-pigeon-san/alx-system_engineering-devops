@@ -8,8 +8,5 @@ sudo service nginx start
 # Creating an index.html file in the web root
 echo "Hello World!" | sudo tee /var/www/html/index.html >/dev/null
 
-# Create a symbolic link of the new server block in the /etc/nginx/sites-enabled directory
-sudo ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
-
 # Reload nginx
 sudo nginx -s reload
