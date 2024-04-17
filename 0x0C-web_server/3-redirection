@@ -2,7 +2,7 @@
 # Installing and configuring nginx web server
 # Configuring nginx redirect directive 
 
-directive="location \/redirect_me {\n\t\treturn 301 https:\/\/www.youtube.com\/watch?v=QH2-TGUlwu4\$request_uri;\n\t}\n\n\tlocation \/ {"
+directive="server {\n\tlocation \/redirect_me {\n\t\treturn 301 https:\/\/www.youtube.com\/watch?v=QH2-TGUlwu4\$request_uri;\n\t}"
 
 sudo apt update -y
 sudo apt install nginx -y
@@ -12,7 +12,7 @@ sudo service nginx start
 echo "Hello World!" | sudo tee /var/www/html/index.html >/dev/null
 
 # Create location directive to redirect 'redirect_me' to another page
-sudo sed -i "0,/location \/ {/s/location \/ {/$directive/g" /etc/nginx/sites-available/default
+sudo sed -i "0,/server {/s/server {/$directive/g" /etc/nginx/sites-available/default
 
 # Create a symbolic link of the new server block in the /etc/nginx/sites-enabled directory
 # sudo ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
