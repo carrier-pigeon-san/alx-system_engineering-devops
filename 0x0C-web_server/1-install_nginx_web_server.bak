@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# Installing and configuring nginx web server
+
+server_block="server {
+	listen 80;
+	listen [::]:80 default_server;
+
+	server_name web_01.com;
+
+	root /var/www/web_01.com/html;
+	index index.html;
+
+	location / {
+		try_files \$uri \$uri/ =404;
+	}
+}"
+
+sudo apt update
+sudo apt install nginx -y
+sudo service nginx start
+
+sudo mkdir -p /var/www/web_01.com/html
+
+if [ "$USER" != 'root' ]
+then
+	sudo chown -R "$USER":"$USER" /var/www/web_01.com/html
+fi
+
+# Creating an index.html file in the web root
+echo "Hello World!" | sudo tee /var/www/web_01.com/html/index.html >/dev/null
+
+# Write the nginx server block to a configuration file
+echo "$server_block" | sudo tee /etc/nginx/sites-available/web_01.com >/dev/null
+
+# Create a symbolic link of the new server block in the /etc/nginx/sites-enabled directory
+sudo ln -s /etc/nginx/sites-available/web_01.com /etc/nginx/sites-enabled/
+
+# Remove symbolic link to default server block from the /etc/nginx/sites-enabled directory
+sudo rm -f /etc/nginx/sites-enabled/default
+
+# Uncomment the server_names_hash_bucket_size directive within the nginx.conf file.
+sudo sed -i 's/# server_names_hash_bucket_size/server_names_hash_bucket_size/g' /etc/nginx/nginx.conf
+
+# Reload nginx
+sudo nginx -s reload
