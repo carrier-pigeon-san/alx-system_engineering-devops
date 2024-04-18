@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# Nginx server custom 404 page configuration
+
+sudo apt update -y
+sudo apt install nginx -y
+sudo service nginx start
+
+# Creating an index.html file in the web root
+echo "Hello World!" | sudo tee /var/www/html/index.html >/dev/null
+
+# Creating custom error page
+echo "Ceci n'est pas une page" | sudo tee /usr/share/nginx/html/custom_404.html >/dev/null
+
+sudo sed -i "/server_name/a\\\n\terror_page 404 /custom_404.html;\n\tlocation /custom_404.html {\n\t\troot /usr/share/nginx/html;\n\t\tinternal;\n\t}" /etc/nginx/sites_enabled/default
+
+# Create location directive to redirect 'redirect_me' to another page
+sudo sed -i "/server_name/a\\\n\trewrite ^/redirect_me https://medium.com/@obaresandy/ permanent;" /etc/nginx/sites-enabled/default
+
+# Reload nginx
+sudo nginx -s reload
