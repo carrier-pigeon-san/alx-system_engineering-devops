@@ -10,10 +10,8 @@ sudo service nginx start
 echo "Hello World!" | sudo tee /var/www/html/index.html >/dev/null
 
 # Create location directive to redirect 'redirect_me' to another page
-sudo sed -i "/server_name/a\\\n\trewrite ^/redirect_me https://medium.com/@obaresandy/ permanent;" /etc/nginx/sites-available/default
-
-# Create a symbolic link of the new server block in the /etc/nginx/sites-enabled directory
-# sudo ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
+sudo sed -i "/server_name/a\\\n\trewrite ^/redirect_me https://medium.com/@obaresandy/ permanent;" /etc/nginx/sites-enabled/default
 
 # Reload nginx
 sudo service nginx restart
+
