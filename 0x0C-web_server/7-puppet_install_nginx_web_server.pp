@@ -8,16 +8,19 @@ exec { 'apt-update':
   path    => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
 }
 
-package { 'nginx':
-  ensure   => installed,
-  provider => 'apt',
-  require  => Exec['apt-update'],
+exec { 'nginx-install':
+  command    => 'apt install nginx -y',
+  path       => '/usr/bin:/usr/sbin:/bin',
+  unless     => 'dpkg -l | grep nginx',
+  privileged => true,
+  require    => Exec['apt-update'],
 }
 
-service { 'nginx':
-  ensure  => running,
-  enable  => true,
-  require => Package['nginx'],
+exec { 'start-nginx':
+  command    => 'service nginx start',
+  path       => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
+  privileged => true,
+  require    => Exec['nginx-install'],
 }
 
 file { '/var/www/html/index.html':
