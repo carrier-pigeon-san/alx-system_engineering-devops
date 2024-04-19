@@ -4,34 +4,39 @@
 # Permanent redirect directive for '/redirect_me' directory
 
 exec { 'apt-update':
-  command => 'apt update -y',
-  path    => '/usr/bin:/usr/sbin:/bin',
+  command    => 'apt update -y',
+  path       => '/usr/bin:/usr/sbin:/bin',
+  privileged => true,
 }
 
-package { 'nginx':
-  ensure   => installed,
-  provider => 'apt',
-  require  => Exec['apt-update'],
+exec { 'nginx-install':
+  command    => 'apt install nginx -y',
+  path       => '/usr/bin:/usr/sbin:/bin',
+  unless     => 'dpkg -l | grep nginx',
+  privileged => true,
+  require    => Exec['apt-update'],
 }
 
-service { 'nginx':
-  ensure  => running,
-  enable  => true,
-  require => Package['nginx'],
+exec { 'start-nginx':
+  command    => 'service nginx start',
+  path       => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
+  privileged => true,
+  require    => Exec['nginx-install'],
 }
 
-file { '/var/www/html/index.html':
-  ensure => file,
-  path   => '/tmp/school',
-  mode   => '0755',
+exec { 'write-html-file':
+  command    => 'echo "Hello World!" > /var/www/html/index.html',
+  path       => '/bin:/usr/bin:/usr/sbin:/usr/local/bin',
+  privileged => true,
 }
 
 exec { 'add-nginx-redirect':
-  command => "sed -i '/server_name/a\\\\n\\trewrite ^/redirect_me https://medium.com/@obaresandy/ permanent;' example",
-  path    => '/usr/bin:/usr/sbin:/bin',
-  unless  => "grep -q 'rewrite ^/redirect_me' example",
-  require => Service['nginx'],
-  notify  => Service['nginx'],
+  command    => "sed -i '/server_name/a\\\\n\\trewrite ^/redirect_me https://medium.com/@obaresandy/ permanent;' example",
+  path       => '/usr/bin:/usr/sbin:/bin',
+  unless     => "grep -q 'rewrite ^/redirect_me' example",
+  privileged => true,
+  require    => Service['nginx'],
+  notify     => Service['nginx'],
 }
 
 exec { 'nginx-reload':
