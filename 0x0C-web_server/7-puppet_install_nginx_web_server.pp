@@ -5,7 +5,7 @@
 
 exec { 'apt-update':
   command => 'apt update -y',
-  path    => '/usr/bin:/usr/sbin:/bin',
+  path    => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
 }
 
 package { 'nginx':
@@ -21,22 +21,23 @@ service { 'nginx':
 }
 
 file { '/var/www/html/index.html':
-  ensure => file,
-  path   => '/tmp/school',
-  mode   => '0755',
+  ensure  => file,
+  path    => '/var/www/html/index.html',
+  mode    => '0755',
+  content => 'Hello World!',
 }
 
 exec { 'add-nginx-redirect':
-  command => "sed -i '/server_name/a\\\\n\\trewrite ^/redirect_me https://medium.com/@obaresandy/ permanent;' example",
-  path    => '/usr/bin:/usr/sbin:/bin',
-  unless  => "grep -q 'rewrite ^/redirect_me' example",
+  command => "sed -i '/server_name/a\\\n\trewrite ^/redirect_me$ https://medium.com/@obaresandy/ permanent;' /etc/nginx/sites-available/default",
+  path    => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
+  unless  => "grep -q 'rewrite ^/redirect_me' /etc/nginx/sites-available/default",
   require => Service['nginx'],
   notify  => Service['nginx'],
 }
 
 exec { 'nginx-reload':
   command    => 'nginx -s reload',
-  path       => '/usr/bin:/usr/sbin:/bin',
+  path       => '/usr/bin:/usr/sbin:/bin/usr/local/bin',
   privileged => true,
   require    => Service['nginx'],
   notify     => Service['nginx'],
