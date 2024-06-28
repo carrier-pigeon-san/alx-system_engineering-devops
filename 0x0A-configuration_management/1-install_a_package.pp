@@ -2,11 +2,11 @@
 # Version 2.1.0
 
 package { 'Werkzeug':
-  ensure   => '3.0.3',
+  ensure   => '2.1.1',
   provider => 'pip3',
 }
 
-package { 'flask':
+package { 'Flask':
   ensure   => '2.1.0',
   provider => 'pip3',
 }
