@@ -16,14 +16,8 @@ server_block="server {
 apt-get update
 apt-get install nginx -y
 
-mkdir -p /var/www/abnb_alx.com/html
+rm -f /var/www/html/*
 
-echo "Hello World!" | tee /var/www/abnb_alx.com/html/index.html >/dev/null
-
-echo "$server_block" | tee /etc/nginx/sites-available/abnb_alx.com >/dev/null
-
-rm -rf /etc/nginx/sites-enabled/default
-
-ln -s /etc/nginx/sites-available/abnb_alx.com /etc/nginx/sites-enabled/
+echo "Hello World!" | tee /var/www/html/index.html >/dev/null
 
 nginx -s reload
