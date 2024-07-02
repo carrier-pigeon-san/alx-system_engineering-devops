@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# This bash script installs and configures a nginx server
+# The server listens on port 80
+# The server returns a page containing the string 'Hello World' when...
+# queried at the root
+
+server_block="server {
+	listen 80;
+
+	server_name abnb_alx.com;
+
+	root /var/www/abnb_alx.com/html;
+	index index.html;
+}"
+
+apt-get update
+apt-get install nginx -y
+
+mkdir -p /var/www/abnb_alx.com/html
+
+echo "Hello World!" | tee /var/www/abnb_alx.com/html/index.html >/dev/null
+
+echo "$server_block" | tee /etc/nginx/sites-available/abnb_alx.com >/dev/null
+
+rm -rf /etc/nginx/sites-enabled/default
+
+ln -s /etc/nginx/sites-available/abnb_alx.com /etc/nginx/sites-enabled/
+
+nginx -s reload
