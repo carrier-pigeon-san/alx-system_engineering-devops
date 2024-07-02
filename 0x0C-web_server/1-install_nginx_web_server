@@ -4,15 +4,6 @@
 # The server returns a page containing the string 'Hello World' when...
 # queried at the root
 
-server_block="server {
-	listen 80;
-
-	server_name abnb_alx.com;
-
-	root /var/www/abnb_alx.com/html;
-	index index.html;
-}"
-
 apt-get update
 apt-get install nginx -y
 
