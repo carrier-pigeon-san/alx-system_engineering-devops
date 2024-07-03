@@ -13,4 +13,4 @@ echo "Hello World!" | tee /var/www/abnb_alx.com/html/index.html >/dev/null
 
 sed -i "s/root \/var\/www\/html/root \/var\/www\/abnb_alx.com\/html/g" /etc/nginx/sites-available/default
 
-nginx -s reload
+service nginx restart
