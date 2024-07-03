@@ -10,9 +10,11 @@ redirect="server_name _;\n\trewrite ^\/redirect_me$ https:\/\/www.youtube.com\/w
 apt-get update
 apt-get install nginx -y
 
-rm -f /var/www/html/*
+mkdir -p /var/www/abnb_alx.com/html
 
-echo "Hello World!" | tee /var/www/html/index.html >/dev/null
+echo "Hello World!" | tee /var/www/abnb_alx.com/html/index.html >/dev/null
+
+sed -i "s/root \/var\/www\/html/root \/var\/www\/abnb_alx.com\/html/g" /etc/nginx/sites-available/default
 
 sed -i "s/server_name _;/$redirect/g" /etc/nginx/sites-available/default
 
