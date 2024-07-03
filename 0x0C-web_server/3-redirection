@@ -16,4 +16,4 @@ echo "Hello World!" | tee /var/www/html/index.html >/dev/null
 
 sed -i "s/server_name _;/$redirect/g" /etc/nginx/sites-available/default
 
-nginx -s reload
+service nginx restart
