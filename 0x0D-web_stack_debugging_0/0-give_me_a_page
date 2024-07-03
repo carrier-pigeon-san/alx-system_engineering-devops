@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 # The script restarts apache server to enable it to return page when queried
-apachectl restart
+systemctl restart apache2
