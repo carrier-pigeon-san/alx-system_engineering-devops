@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# This bash script installs and configures a nginx server
+# The server listens on port 80
+# The server returns a page containing the string 'Hello World' when...
+# queried at the root
+# The server redirect permanently when /redirect_me is queried
+# The server has a custom error page displaying the string 'Ceci n'est pas une page'
+
+redirect="server_name _;\n\trewrite ^\/redirect_me$ https:\/\/www.youtube.com\/watch?v=QH2-TGUlwu4 permanent;"
+error_page="error_page 404 \/custom_404.html;\n\tlocation \/custom_404.html {\n\t\troot \/usr\/share\/nginx\/html;\n\t\tinternal;"
+
+apt-get update
+apt-get install nginx -y
+
+rm -f /var/www/html/*
+
+echo "Hello World!" | tee /var/www/html/index.html >/dev/null
+
+sed -i "s/server_name _;/$redirect/g" /etc/nginx/sites-available/default
+
+sed -i "s/location \/ {/$error_page/g" /etc/nginx/sites-available/default
+sed -i "/try_files/c\\" /etc/nginx/sites-available/default
+
+echo "Ceci n'est pas une page" | tee /usr/share/nginx/html/custom_404.html >/dev/null
+
+nginx -s reload
