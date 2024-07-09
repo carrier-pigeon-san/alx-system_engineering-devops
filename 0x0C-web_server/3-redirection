@@ -14,4 +14,6 @@ echo "Hello World!" | tee /var/www/abnb_alx.com/html/index.html >/dev/null
 
 sed -i "s/root \/var\/www\/html/root \/var\/www\/abnb_alx.com\/html/g" /etc/nginx/sites-available/default
 
+sed -i "/server_name _;/a \\\n\trewrite ^/redirect_me\$ https://www.youtube.com/watch?v=QH2-TGUlwu4/ permanent;" /etc/nginx/sites-available/default
+
 service nginx restart
