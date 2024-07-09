@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Installs and configures nginx server according to given specifications
+apt-get update
+apt-get install nginx -y
+mkdir -p /var/www/abnb_alx.com/html
+echo "Hello World!" | tee /var/www/abnb_alx.com/html/index.html
+sed -i "s/root \/var\/www\/html/location \/ {\n\
+        add_header X-Served-By \"\$hostname\" always;\n\
+    }\n\
+    root \/var\/www\/abnb_alx.com\/html/g" /etc/nginx/sites-available/default
+
+service nginx restart
