@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# Installs and configures a HAProxy load-balancing server
+# Configures the load balancer to distribute traffic between two web severs
+# The HAProxy is made manageable via an init script
+
+apt-get install -y --no-install-recommends software-properties-common
+add-apt-repository ppa:vbernat/haproxy-2.8
+apt-get install -y haproxy=2.8.\*
+
+balancer="
+frontend abnb_front
+	bind *:80
+	mode http
+	default_backend abnb_back
+
+backend abnb_back
+	balance roundrobin
+	server web-01 100.26.223.74:80 check
+	server web-02 54.237.53.61:80 check
+"
+
+echo "
+ENABLED=1" >> /etc/default/haproxy
+
+cp -a /etc/haproxy/haproxy.cfg{,.old}
+echo "$balancer" >> /etc/haproxy/haproxy.cfg
+
+service haproxy start
+
+service haproxy restart
