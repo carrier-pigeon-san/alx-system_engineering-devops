@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Nginx server failure to listen on port 80 fix
+
+sudo ln -s -f /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
+sudo service nginx restart
