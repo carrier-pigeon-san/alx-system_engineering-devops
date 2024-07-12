@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# Displays information about subdomains
+
+if [ "$#" -ge 1 ]
+then
+	if [ "$#" -ge 2 ]
+	then
+		full_dom="$2.$1"
+		address=$(eval dig "$full_dom" A +short)
+		if [ -n "$address" ]
+		then
+			echo "The subdomain $2 is a A record and points to $address"
+		fi
+		exit 0
+	fi
+	sub_doms=("www" "lb-01" "web-01" "web-02")
+	for sub in "${sub_doms[@]}"
+	do
+		full_dom="$sub.$1"
+		address=$(eval dig "$full_dom" A +short)
+		if [ -n "$address" ]
+		then
+			echo "The subdomain $sub is a A record and points to $address"
+		fi
+	done
+fi
