@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Configures a given container to run nginx service as nginx user 
+# Configures nginx to listen on all active IPs on port 8080
+
+chown -R nginx:nginx /var/lib/nginx
+chown -R nginx:nginx /var/log/nginx
+sed -i "s/listen 80/listen 8080/g" /etc/nginx/sites-available/default
+sed -i "s/listen [::]:80/listen[::]:8080/g" /etc/nginx/sites-available/default
+sed -i "s/user www-data/user nginx/g" /etc/nginx/nginx.conf
+sudo -u nginx service nginx restart
