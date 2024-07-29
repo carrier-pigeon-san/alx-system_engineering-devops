@@ -1,4 +1,4 @@
-#!/usr/bin/pythonr
+#!/usr/bin/python3
 """This module contains a script that return information about a given user's
 TODO list progress from a REST API endpoint and exports it to a csv file
 """
