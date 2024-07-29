@@ -1,10 +1,10 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 """This module contains a python script that return information about a given
 user's TODO list progress from a REST API endpoint
 """
 from sys import argv
-import requests
 from requests import exceptions
+import requests
 
 if __name__ == '__main__':
     user_id = argv[1]
